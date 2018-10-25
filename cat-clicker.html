@@ -4,9 +4,15 @@
 	<title>Cat Clicker</title>
 </head>
 <body>
+	<ul id="cat-list">
+		
+	</ul>
+	<span id="cat-name"></span> Click Count : <span id="click-count">0</span><br>
+	<img src="" alt="Cute Cat" id="cat-image">
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script>
-		const cats = {
-			"cats": [
+		const cats = [
 				{
 					"name": "Cat A",
 					"clickCount": 0,
@@ -32,8 +38,57 @@
 					"clickCount": 0,
 					"url": "https://uploads.scratch.mit.edu/users/avatars/1385/1878.png"
 				}
-			]
-		};
+			];
+
+		// for (let index in cats) {
+		// 	$('#cat-list').append('<li id='+index+'>'+cats[index].name+'</li>');
+		// }
+
+		// $('#cat-list li').click(function(){
+		// 	let cat_index = $(this).attr('id');
+		// 	$('#cat-image').attr('src', cats[cat_index].url);
+		// 	$('#cat-image').attr('data-cindex', cat_index);
+		// 	$('#click-count').html('0');
+		// 	$('#cat-name').html(cats[cat_index].name);
+		// });
+
+		// $('#cat-image').click(function(){
+		// 	let cat_index = $(this).attr('data-cindex');
+		// 	cats[cat_index].clickCount += 1;
+		// 	$('#click-count').html(cats[cat_index].clickCount);
+		// });
+
+
+		for (let cat of cats) {
+			document.querySelector('#cat-list').innerHTML += `<li>${cat.name}</li>`;
+		}
+
+		var cats_obj = document.querySelectorAll('#cat-list > li');
+
+		for(let cat2 of cats_obj) {
+			cat2.addEventListener("click", function(){
+				// console.log(cat2.innerHTML);
+				// console.log(cats[0].name);
+				for(let cat in cats) {
+					if(cats[cat].name == cat2.innerHTML) {
+						document.querySelector('#cat-image').src = cats[cat].url;
+						document.querySelector('#cat-name').innerHTML = cat2.innerHTML;
+						document.querySelector('#click-count').innerHTML = cats[cat].clickCount;
+					}
+				}
+
+			})
+		}
+
+		document.querySelector('#cat-image').addEventListener("click", function(event){
+			
+			for(let cat in cats) {
+				if(cats[cat].url == event.target.src) {
+					cats[cat].clickCount += 1;
+					document.querySelector('#click-count').innerHTML = cats[cat].clickCount;
+				}
+			}
+		});
 	</script>
 </body>
 </html>
